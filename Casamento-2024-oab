@@ -1,0 +1,120 @@
+vue
+<template>
+  <div class="formulario-casamento">
+    <h2>💒 FORMULÁRIO DE CASAMENTO 💒</h2>
+    <form @submit.prevent="enviarFormulario">
+      <div>
+        <label>Nome do advogado(a) responsável:</label>
+        <input v-model="formulario.nomeAdvogado" type="text" required>
+      </div>
+      <div>
+        <label>RG do Advogado (a) responsável:</label>
+        <input v-model="formulario.rgAdvogado" type="text" required>
+      </div>
+      <div>
+        <label>Nome do Noivo:</label>
+        <input v-model="formulario.nomeNoivo" type="text" required>
+      </div>
+      <div>
+        <label>CPF do Noivo:</label>
+        <input v-model="formulario.cpfNoivo" type="text" required>
+      </div>
+      <div>
+        <label>Nome da Noiva:</label>
+        <input v-model="formulario.nomeNoiva" type="text" required>
+      </div>
+      <div>
+        <label>CPF da Noiva:</label>
+        <input v-model="formulario.cpfNoiva" type="text" required>
+      </div>
+      <div>
+        <label>Data do Casamento:</label>
+        <input v-model="formulario.dataCasamento" type="date" required>
+      </div>
+      <div>
+        <label>Regime de Bens:</label>
+        <select v-model="formulario.regimeBens" required>
+          <option value="comunhao_total">COMUNHÃO TOTAL DE BENS</option>
+          <option value="comunhao_parcial">COMUNHÃO PARCIAL DE BENS</option>
+          <option value="separacao_total">SEPARAÇÃO TOTAL DE BENS</option>
+        </select>
+      </div>
+      <div>
+        <label>Nome do Noivo após casamento:</label>
+        <input v-model="formulario.nomeNoivoCasado" type="text" required>
+      </div>
+      <div>
+        <label>Nome da Noiva após casamento:</label>
+        <input v-model="formulario.nomeNoivaCasada" type="text" required>
+      </div>
+      <div>
+        <label>OBSERVAÇÕES/AVERBAÇÕES:</label>
+        <textarea v-model="formulario.observacoes"></textarea>
+      </div>
+      <button type="submit">Confirmar</button>
+    </form>
+    <div v-if="formularioEnviado">
+      <pre>{{ formatarResultado() }}</pre>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      formulario: {
+        nomeAdvogado: '',
+        rgAdvogado: '',
+        nomeNoivo: '',
+        cpfNoivo: '',
+        nomeNoiva: '',
+        cpfNoiva: '',
+        dataCasamento: '',
+        regimeBens: '',
+        nomeNoivoCasado: '',
+        nomeNoivaCasada: '',
+        observacoes: '',
+      },
+      formularioEnviado: false,
+    };
+  },
+  methods: {
+    enviarFormulario() {
+      this.formularioEnviado = true;
+    },
+    formatarResultado() {
+      const dataAtual = new Date().toLocaleString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+      let resultado = "```\n";
+      resultado += "🔹 FORMULÁRIO DE CASAMENTO 💒\n";
+      resultado += "🔹 Nome do advogado(a) responsável: " + this.formulario.nomeAdvogado + "\n";
+      resultado += "🔹 RG do Advogado (a) responsável: " + this.formulario.rgAdvogado + "\n";
+      resultado += "🔹 Nome do Noivo: " + this.formulario.nomeNoivo + "\n";
+      resultado += "🔹 CPF do Noivo: " + this.formulario.cpfNoivo + "\n";
+      resultado += "🔹 Nome da Noiva: " + this.formulario.nomeNoiva + "\n";
+      resultado += "🔹 CPF da Noiva: " + this.formulario.cpfNoiva + "\n";
+      resultado += "🔹 Data do Casamento: " + this.formulario.dataCasamento + "\n";
+      resultado += "🔹 Regime de Bens: " + this.traduzirRegimeBens(this.formulario.regimeBens) + "\n";
+      resultado += "🔹 Nome do Noivo após casamento: " + this.formulario.nomeNoivoCasado + "\n";
+      resultado += "🔹 Nome da Noiva após casamento: " + this.formulario.nomeNoivaCasada + "\n";
+      resultado += "🔹 OBSERVAÇÕES/AVERBAÇÕES: " + this.formulario.observacoes + "\n";
+      resultado += "🔹 Data e Hora do Envio: " + dataAtual + "\n";
+      resultado += "```";
+      resultado += "\n━━━━━━━━━━━━━━━━━━✧ • ✧━━━━━━━━━━━━━━━\n⚖️ SEM MAIS PARA O MOMENTO, A PARTIR DESTA DATA DECLARO ASSIM CASADOS\nEM MATRIMÔNIO OS CIDADÃOS SUPRAMENCIONADOS.⚖️\n━━━━━━━━━━━━━━━━━━━━━✧ • ✧━━━━━━━━━━━━━";
+      return resultado;
+    },
+    traduzirRegimeBens(valor) {
+      const regimes = {
+        comunhao_total: "COMUNHÃO TOTAL DE BENS",
+        comunhao_parcial: "COMUNHÃO PARCIAL DE BENS",
+        separacao_total: "SEPARAÇÃO TOTAL DE BENS",
+      };
+      return regimes[valor] || valor;
+    },
+  },
+};
+</script>
+
+<style>
+/* Adicione seus estilos aqui */
+</style>
